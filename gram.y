@@ -93,6 +93,7 @@ static struct in6_addr get_prefix6(struct in6_addr const *addr, struct in6_addr 
 %token		T_Base6Interface
 %token		T_Base6to4Interface
 %token		T_UnicastOnly
+%token		T_UnrestrictedUnicast
 
 %token		T_HomeAgentPreference
 %token		T_HomeAgentLifetime
@@ -323,6 +324,10 @@ ifaceval	: T_MinRtrAdvInterval NUMBER ';'
 		| T_UnicastOnly SWITCH ';'
 		{
 			iface->UnicastOnly = $2;
+		}
+		| T_UnrestrictedUnicast SWITCH ';'
+		{
+			iface->UnrestrictedUnicast = $2;
 		}
 		| T_AdvMobRtrSupportFlag SWITCH ';'
 		{

@@ -54,6 +54,7 @@ struct Interface {
 	double MinDelayBetweenRAs;
 	int AdvSourceLLAddress;
 	int UnicastOnly;
+	int UnrestrictedUnicast;
 	struct Clients *ClientList;
 
 	struct state_info {

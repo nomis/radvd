@@ -43,6 +43,7 @@
 #define DFLT_AdvDefaultLifetime(iface)	MAX2(1, (int)(3.0 * (iface)->MaxRtrAdvInterval))
 #define DFLT_MinDelayBetweenRAs		MIN_DELAY_BETWEEN_RAS
 #define DFLT_AdvDefaultPreference	0
+#define DFLT_UnrestrictedUnicast 0
 
 /* Options sent with RA */
 
