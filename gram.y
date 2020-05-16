@@ -61,6 +61,7 @@ static struct in6_addr get_prefix6(struct in6_addr const *addr, struct in6_addr 
 %token	<dec>	DECIMAL
 %token	<num>	SWITCH
 %token	<addr>	IPV6ADDR
+%token	<addr>	NOT_IPV6ADDR
 %token 		INFINITY
 
 %token		T_IgnoreIfMissing
@@ -350,6 +351,19 @@ v6addrlist	: IPV6ADDR ';'
 			}
 
 			memcpy(&(new->Address), $1, sizeof(struct in6_addr));
+			new->ignored = 0;
+			$$ = new;
+		}
+		| NOT_IPV6ADDR ';'
+		{
+			struct Clients *new = calloc(1, sizeof(struct Clients));
+			if (new == NULL) {
+				flog(LOG_CRIT, "calloc failed: %s", strerror(errno));
+				ABORT;
+			}
+
+			memcpy(&(new->Address), $1, sizeof(struct in6_addr));
+			new->ignored = 1;
 			$$ = new;
 		}
 		| v6addrlist IPV6ADDR ';'
@@ -361,6 +375,20 @@ v6addrlist	: IPV6ADDR ';'
 			}
 
 			memcpy(&(new->Address), $2, sizeof(struct in6_addr));
+			new->ignored = 0;
+			new->next = $1;
+			$$ = new;
+		}
+		| v6addrlist NOT_IPV6ADDR ';'
+		{
+			struct Clients *new = calloc(1, sizeof(struct Clients));
+			if (new == NULL) {
+				flog(LOG_CRIT, "calloc failed: %s", strerror(errno));
+				ABORT;
+			}
+
+			memcpy(&(new->Address), $2, sizeof(struct in6_addr));
+			new->ignored = 1;
 			new->next = $1;
 			$$ = new;
 		}

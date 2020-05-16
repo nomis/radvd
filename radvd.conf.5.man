@@ -108,6 +108,8 @@ The definitions are of the form:
 .B };
 .fi
 
+Clients can be prefixed with "!" to ignore them completely and never send advertisements to them.
+
 ABRO (Authoritative Border Router Option) definitions are of the form:
 
 .nf

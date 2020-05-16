@@ -121,6 +121,7 @@ struct Interface {
 
 struct Clients {
 	struct in6_addr Address;
+	int ignored;
 	struct Clients *next;
 };
 
